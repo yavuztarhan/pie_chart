@@ -6,6 +6,7 @@ class ChartValuesOptions {
   final bool showChartValueBackground;
   final int decimalPlaces;
   final bool showChartValuesInPercentage;
+  final bool showChartValuesInDegrees;
   final bool showChartValues;
   final bool showChartValuesOutside;
   final Color chartValueBackgroundColor;
@@ -16,6 +17,7 @@ class ChartValuesOptions {
     this.decimalPlaces = 1,
     this.chartValueBackgroundColor,
     this.showChartValuesInPercentage = false,
+    this.showChartValuesInDegrees = false,
     this.chartValueStyle = defaultChartValueStyle,
     this.showChartValues = true,
     this.showChartValuesOutside = false,
