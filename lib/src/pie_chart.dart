@@ -46,8 +46,7 @@ class PieChart extends StatefulWidget {
   _PieChartState createState() => _PieChartState();
 }
 
-class _PieChartState extends State<PieChart>
-    with SingleTickerProviderStateMixin {
+class _PieChartState extends State<PieChart> with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
   double _animFraction = 0.0;
@@ -97,11 +96,7 @@ class _PieChartState extends State<PieChart>
     return Flexible(
       child: LayoutBuilder(
         builder: (_, c) => Container(
-          height: widget.chartRadius != null
-              ? c.maxWidth < widget.chartRadius
-                  ? c.maxWidth
-                  : widget.chartRadius
-              : null,
+          height: widget.chartRadius != null ? c.maxWidth < widget.chartRadius ? c.maxWidth : widget.chartRadius : null,
           child: CustomPaint(
             painter: PieChartPainter(
               _animFraction,
@@ -109,16 +104,14 @@ class _PieChartState extends State<PieChart>
               widget.chartValuesOptions.showChartValuesOutside,
               widget.colorList,
               chartValueStyle: widget.chartValuesOptions.chartValueStyle,
-              chartValueBackgroundColor:
-                  widget.chartValuesOptions.chartValueBackgroundColor,
+              chartValueBackgroundColor: widget.chartValuesOptions.chartValueBackgroundColor,
               values: legendValues,
               titles: legendTitles,
               initialAngle: widget.initialAngleInDegree,
-              showValuesInPercentage:
-                  widget.chartValuesOptions.showChartValuesInPercentage,
+              showValuesInPercentage: widget.chartValuesOptions.showChartValuesInPercentage,
+              showChartValuesInDegrees: widget.chartValuesOptions.showChartValuesInDegrees,
               decimalPlaces: widget.chartValuesOptions.decimalPlaces,
-              showChartValueLabel:
-                  widget.chartValuesOptions.showChartValueBackground,
+              showChartValueLabel: widget.chartValuesOptions.showChartValueBackground,
               chartType: widget.chartType,
               centerText: widget.centerText,
               formatChartValues: widget.formatChartValues,
@@ -203,9 +196,7 @@ class _PieChartState extends State<PieChart>
       return Padding(
         padding: padding,
         child: Wrap(
-          direction: widget.legendOptions.showLegendsInRow
-              ? Axis.horizontal
-              : Axis.vertical,
+          direction: widget.legendOptions.showLegendsInRow ? Axis.horizontal : Axis.vertical,
           runSpacing: 8,
           crossAxisAlignment: WrapCrossAlignment.start,
           children: legendTitles
