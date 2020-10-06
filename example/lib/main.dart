@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
   bool _showChartValueBackground = true;
   bool _showChartValues = true;
   bool _showChartValuesInPercentage = false;
+  bool _showChartValuesInDegrees = false;
   bool _showChartValuesOutside = false;
 
   LegendShape _legendShape = LegendShape.Circle;
@@ -81,9 +82,7 @@ class _HomePageState extends State<HomePage> {
       dataMap: dataMap,
       animationDuration: Duration(milliseconds: 800),
       chartLegendSpacing: _chartLegendSpacing,
-      chartRadius: MediaQuery.of(context).size.width / 3.2 > 300
-          ? 300
-          : MediaQuery.of(context).size.width / 3.2,
+      chartRadius: MediaQuery.of(context).size.width / 3.2 > 300 ? 300 : MediaQuery.of(context).size.width / 3.2,
       colorList: colorList,
       initialAngleInDegree: 0,
       chartType: _chartType,
@@ -92,9 +91,7 @@ class _HomePageState extends State<HomePage> {
         showLegendsInRow: _showLegendsInRow,
         legendPosition: _legendPosition,
         showLegends: _showLegends,
-        legendShape: _legendShape == LegendShape.Circle
-            ? BoxShape.circle
-            : BoxShape.rectangle,
+        legendShape: _legendShape == LegendShape.Circle ? BoxShape.circle : BoxShape.rectangle,
         legendTextStyle: TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -103,6 +100,7 @@ class _HomePageState extends State<HomePage> {
         showChartValueBackground: _showChartValueBackground,
         showChartValues: _showChartValues,
         showChartValuesInPercentage: _showChartValuesInPercentage,
+        showChartValuesInDegrees: _showChartValuesInDegrees,
         showChartValuesOutside: _showChartValuesOutside,
       ),
       ringStrokeWidth: _ringStrokeWidth,
@@ -335,6 +333,16 @@ class _HomePageState extends State<HomePage> {
               onChanged: (val) {
                 setState(() {
                   _showChartValuesInPercentage = val;
+                });
+              },
+            ),
+            SwitchListTile(
+              //!degree
+              value: _showChartValuesInDegrees,
+              title: Text("showChartValuesInDegree"),
+              onChanged: (val) {
+                setState(() {
+                  _showChartValuesInDegrees = val;
                 });
               },
             ),
