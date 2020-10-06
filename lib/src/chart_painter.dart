@@ -14,6 +14,7 @@ class PieChartPainter extends CustomPainter {
   final Color chartValueBackgroundColor;
   final double initialAngle;
   final bool showValuesInPercentage;
+  final bool showChartValuesInDegrees;
   final bool showChartValues;
   final bool showChartValuesOutside;
   final int decimalPlaces;
@@ -37,6 +38,7 @@ class PieChartPainter extends CustomPainter {
     List<String> titles,
     this.initialAngle,
     this.showValuesInPercentage,
+    this.showChartValuesInDegrees,
     this.decimalPlaces,
     this.showChartValueLabel,
     this.chartType,
@@ -85,24 +87,30 @@ class PieChartPainter extends CustomPainter {
           _paintList[i],
         );
         final radius = showChartValuesOutside ? (side / 2) + 16 : side / 3;
-        final x = (radius) *
-            math.cos(
-                _prevAngle + ((((_totalAngle) / _total) * _subParts[i]) / 2));
-        final y = (radius) *
-            math.sin(
-                _prevAngle + ((((_totalAngle) / _total) * _subParts[i]) / 2));
+        final x = (radius) * math.cos(_prevAngle + ((((_totalAngle) / _total) * _subParts[i]) / 2));
+        final y = (radius) * math.sin(_prevAngle + ((((_totalAngle) / _total) * _subParts[i]) / 2));
         if (_subParts.elementAt(i).toInt() != 0) {
           final value = formatChartValues != null
               ? formatChartValues(_subParts.elementAt(i))
               : _subParts.elementAt(i).toStringAsFixed(this.decimalPlaces);
 
           if (showChartValues) {
-            final name = showValuesInPercentage
-                ? (((_subParts.elementAt(i) / _total) * 100)
-                        .toStringAsFixed(this.decimalPlaces) +
-                    '%')
-                : value;
-            _drawName(canvas, name, x, y, side);
+            //! new: show pie degrees
+            if (showChartValuesInDegrees == true && showValuesInPercentage == false) {
+              final name = (((_subParts.elementAt(i) / _total) * 360).toInt().toString() + '°');
+              _drawName(canvas, name, x, y, side);
+            } else if (showChartValuesInDegrees == false && showValuesInPercentage == true) {
+              final name = (((_subParts.elementAt(i) / _total) * 100).toStringAsFixed(this.decimalPlaces) + '%');
+              _drawName(canvas, name, x, y, side);
+            } else if (showChartValuesInDegrees == false && showValuesInPercentage == false) {
+              final name = value;
+              _drawName(canvas, name, x, y, side);
+            } else if (showChartValuesInDegrees == true && showValuesInPercentage == true) {
+              final name = value;
+              _drawName(canvas, name, x, y, side);
+            }
+
+            
           }
         }
         _prevAngle = _prevAngle + (((_totalAngle) / _total) * _subParts[i]);
@@ -154,6 +162,5 @@ class PieChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PieChartPainter oldDelegate) =>
-      oldDelegate._totalAngle != _totalAngle;
+  bool shouldRepaint(PieChartPainter oldDelegate) => oldDelegate._totalAngle != _totalAngle;
 }
